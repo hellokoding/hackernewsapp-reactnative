@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ListView, View, Text, TouchableHighlight} from 'react-native';
 import GiftedListView from 'react-native-gifted-listview';
 import TimeAgo from 'react-native-timeago';
+import PostWebView from './PostWebView';
 
 const HackerNewsApi = {
   topStories: 'https://hacker-news.firebaseio.com/v0/topstories.json',
@@ -32,10 +33,20 @@ class PostsListView extends Component {
     callback(posts);
   }
 
+  _onPressRowTitle(rowData) {
+    this.props.navigator.push({
+      component: PostWebView,
+      title: rowData.title,
+      passProps: {
+        uri: rowData.url
+      }
+    });
+  }
+
   _renderRowView(rowData) {
     return (
       <TouchableHighlight
-        underlayColor='#dddddd'>
+        underlayColor='red' onPress={() => this._onPressRowTitle(rowData)}>
         <View style={styles.rowContainer}>
           <Text style={styles.rowTitleText}>{rowData.title}</Text>
           <View style={styles.rowDetailContainer}>
@@ -69,7 +80,7 @@ class PostsListView extends Component {
   render() {
     return (
       <GiftedListView
-        rowView={this._renderRowView}
+        rowView={(rowData) => this._renderRowView(rowData)}
         renderSeparator={this._renderSeparatorView}
         onFetch={this._onFetch}
         firstLoader={true}
