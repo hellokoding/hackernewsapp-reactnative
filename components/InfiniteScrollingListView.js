@@ -78,12 +78,16 @@ class InfiniteScrollingListView extends Component {
         refreshable={true}
         withSections={false}
         refreshableTintColor='blue'
+        style={styles.listView}
       />
     )
   }
 };
 
 const styles = StyleSheet.create({
+  listView: {
+    flex: 1
+  },
   storyContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
   },
   storyDetailContainer: {
     flex: 1,
-    flexDirection: 'row',
+    //flexDirection: 'row',
     marginTop: 2
   },
   storyDetailText: {

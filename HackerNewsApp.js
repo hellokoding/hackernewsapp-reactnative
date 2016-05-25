@@ -1,46 +1,34 @@
-'use strict';
-
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-  StyleSheet,
-  TabBarIOS,
-  Text,
-  View,
-} = ReactNative;
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import InfiniteScrollingListView from './components/InfiniteScrollingListView';
 
-var HackerNewsApp = React.createClass({
-  statics: {
-    title: '<TabBarIOS>',
-    description: 'Tab-based navigation.',
-  },
+class HackerNewsApp extends Component {
+  constructor(props) {
+    super(props);
 
-  displayName: 'TabBarExample',
-
-  getInitialState: function() {
-    return {
+    this.state = {
       selectedTab: 'popularTab',
       notifCount: 0,
-      presses: 0,
-    };
-  },
+      presses: 0
+    }
+  }
 
-  _renderContent: function(color: string, pageText: string, num?: number) {
+  _renderContent(color: string, pageText: string, num?: number) {
     return (
       <View style={[styles.tabContent, {backgroundColor: color}]}>
         <InfiniteScrollingListView></InfiniteScrollingListView>
       </View>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <TabBarIOS
         unselectedTintColor="black"
         tintColor="#ff6600"
-        barTintColor="white">
+        barTintColor="white"
+        style={styles.tabBar}>
         <Icon.TabBarItem
           color="red"
           title="Popular"
@@ -73,23 +61,22 @@ var HackerNewsApp = React.createClass({
 
       </TabBarIOS>
     );
+  }
+}
+
+const styles = StyleSheet.create({
+  tabBar: {
+    flex: 1
   },
-
-});
-
-var styles = StyleSheet.create({
   tabContent: {
     flex: 1,
     alignItems: 'center',
+    marginTop: 30,
     paddingTop: 30,
     paddingBottom: 30,
-    paddingLeft: 1,
-    paddingRight: 1
-  },
-  tabText: {
-    color: 'black',
-    margin: 50,
-  },
+    paddingLeft: 10,
+    paddingRight: 10
+  }
 });
 
 module.exports = HackerNewsApp;
