@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import InfiniteScrollingListView from './components/InfiniteScrollingListView';
+import ListStories from './ListStories';
 
-class HackerNewsApp extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ class HackerNewsApp extends Component {
   _renderContent(color: string, pageText: string, num?: number) {
     return (
       <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <InfiniteScrollingListView></InfiniteScrollingListView>
+        <ListStories></ListStories>
       </View>
     );
   }
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = HackerNewsApp;
+module.exports = Dashboard;

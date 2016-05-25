@@ -10,7 +10,7 @@ const HackerNewsApi = {
 
 const LISTVIEW_PAGESIZE = 2;
 
-class InfiniteScrollingListView extends Component {
+class ListStories extends Component {
   constructor(props) {
     super(props);
   }
@@ -122,4 +122,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = InfiniteScrollingListView;
+module.exports = ListStories;

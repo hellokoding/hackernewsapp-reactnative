@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, NavigatorIOS } from 'react-native';
-import HackerNewsApp from './HackerNewsApp';
+import Dashboard from './Dashboard';
 
-class HackerNewsApp1 extends Component {
+class HackerNewsApp extends Component {
   render() {
     return (
       <NavigatorIOS
         style={styles.container}
         tintColor='#FF6600'
         initialRoute={{
-          component: HackerNewsApp,
+          component: Dashboard,
           title: 'Hacker News',
           passProps: { myProp: 'foo' },
         }}
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('HackerNewsApp', () => HackerNewsApp1);
+AppRegistry.registerComponent('HackerNewsApp', () => HackerNewsApp);
