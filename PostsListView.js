@@ -5,41 +5,41 @@ import TimeAgo from 'react-native-timeago';
 
 const HackerNewsApi = {
   topStories: 'https://hacker-news.firebaseio.com/v0/topstories.json',
-  story: 'https://hacker-news.firebaseio.com/v0/item/${storyId}.json'
+  post: 'https://hacker-news.firebaseio.com/v0/item/${postId}.json'
 };
 
 const LISTVIEW_PAGESIZE = 2;
 
-class ListStories extends Component {
+class PostsListView extends Component {
   constructor(props) {
     super(props);
   }
 
   async _onFetch(page=1, callback, options) {
     var response = await fetch(HackerNewsApi.topStories);
-    var storyIds = await response.json();
+    var postIds = await response.json();
 
-    var stories = [];
+    var posts = [];
     var startIndex = (page - 1) * LISTVIEW_PAGESIZE;
     var endIndex = startIndex + LISTVIEW_PAGESIZE;
     for(var i = startIndex; i < endIndex; i++) {
-      var storyId = storyIds[i];
-      var response = await fetch(HackerNewsApi.story.replace('${storyId}', storyId));
-      var story = await response.json();
-      stories.unshift(story);
+      var postId = postIds[i];
+      var response = await fetch(HackerNewsApi.post.replace('${postId}', postId));
+      var post = await response.json();
+      posts.unshift(post);
     }
 
-    callback(stories);
+    callback(posts);
   }
 
   _renderRowView(rowData) {
     return (
       <TouchableHighlight
         underlayColor='#dddddd'>
-        <View style={styles.storyContainer}>
-          <Text style={styles.storyTitleText}>{rowData.title}</Text>
-          <View style={styles.storyDetailContainer}>
-            <Text style={styles.storyDetailText}>{rowData.score} points by {rowData.by} | <TimeAgo time={rowData.time*1000} /> | {rowData.descendants} comments</Text>
+        <View style={styles.rowContainer}>
+          <Text style={styles.rowTitleText}>{rowData.title}</Text>
+          <View style={styles.rowDetailContainer}>
+            <Text style={styles.rowDetailText}>{rowData.score} points by {rowData.by} | <TimeAgo time={rowData.time*1000} /> | {rowData.descendants} comments</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -88,21 +88,20 @@ const styles = StyleSheet.create({
   listView: {
     flex: 1
   },
-  storyContainer: {
+  rowContainer: {
     flex: 1,
     justifyContent: 'center',
     paddingTop: 10,
     paddingBottom: 10,
   },
-  storyTitleText: {
+  rowTitleText: {
     fontSize: 18
   },
-  storyDetailContainer: {
+  rowDetailContainer: {
     flex: 1,
-    //flexDirection: 'row',
     marginTop: 2
   },
-  storyDetailText: {
+  rowDetailText: {
     fontSize: 11,
     color: '#828282'
   },
@@ -122,4 +121,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ListStories;
+module.exports = PostsListView;

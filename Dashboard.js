@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ListStories from './ListStories';
+import PostsListView from './PostsListView';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class Dashboard extends Component {
   _renderContent(color: string, pageText: string, num?: number) {
     return (
       <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <ListStories></ListStories>
+        <PostsListView></PostsListView>
       </View>
     );
   }
