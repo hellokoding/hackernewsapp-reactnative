@@ -39,6 +39,8 @@ class PostsListView extends Component {
   }
 
   _onPressRowTitle(rowData) {
+    if (rowData.type === 'comment') return;
+
     this.props.navigator.push({
       component: PostWebView,
       title: rowData.title,
@@ -58,24 +60,35 @@ class PostsListView extends Component {
     });
   }
 
+  _fixCommentText(str){
+  	return String(str).replace(/<p>/g, '\n\n')
+  			   		  .replace(/&#x2F;/g, '/')
+  			   		  .replace('<i>', '')
+  			   		  .replace('</i>', '')
+  			   		  .replace(/&#x27;/g, '\'')
+  			   		  .replace(/&quot;/g, '\"')
+  			   		  .replace(/<a\s+(?:[^>]*?\s+)?href="([^"]*)" rel="nofollow">(.*)?<\/a>/g, "$1");
+  }
+
   _renderRowView(rowData) {
     var timeAgo = <TimeAgo time={rowData.time*1000} />;
     var score = '';
     var commentsCount = '';
-    if (rowData.type !== 'comment') {
+    if (rowData.type === 'comment') {
+      commentsCount = (!rowData.kids ? 0 : rowData.kids.length) + ' comments';
+    } else {
       score = rowData.score + ' points';
       commentsCount = rowData.descendants + ' comments';
-    } else {
-      commentsCount = (!rowData.kids ? 0 : rowData.kids.length) + ' comments';
     }
 
     return (
       <TouchableHighlight
-        underlayColor='red'>
+        underlayColor='red'
+        style={{flex: 1}}>
         <View style={styles.rowContainer}>
           <Text style={styles.rowTitleText}
             onPress={() => this._onPressRowTitle(rowData)}>
-            {rowData.title || rowData.text}
+            {rowData.title || this._fixCommentText(rowData.text)}
           </Text>
           <View style={styles.rowDetailContainer}>
             <Text style={styles.rowDetailText}
@@ -110,23 +123,34 @@ class PostsListView extends Component {
 
   render() {
     return (
-      <GiftedListView
-        rowView={(rowData) => this._renderRowView(rowData)}
-        renderSeparator={this._renderSeparatorView}
-        onFetch={(page=1, callback, options) => this._onFetch(page, callback, options)}
-        firstLoader={true}
-        pagination={true}
-        paginationWaitingView={this._renderPaginationWaitingView}
-        refreshable={true}
-        withSections={false}
-        refreshableTintColor='blue'
-        style={styles.listView}
-      />
+      <View style={styles.listViewContainer}>
+        <GiftedListView
+          rowView={(rowData) => this._renderRowView(rowData)}
+          renderSeparator={this._renderSeparatorView}
+          onFetch={(page=1, callback, options) => this._onFetch(page, callback, options)}
+          firstLoader={true}
+          pagination={true}
+          paginationWaitingView={this._renderPaginationWaitingView}
+          refreshable={true}
+          withSections={false}
+          refreshableTintColor='blue'
+          style={styles.listView}
+        />
+      </View>
     )
   }
 };
 
 const styles = StyleSheet.create({
+  listViewContainer: {
+    flex: 1,
+    //alignItems: 'center',
+    marginTop: 30,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
   listView: {
     flex: 1
   },
@@ -148,10 +172,12 @@ const styles = StyleSheet.create({
     color: '#828282'
   },
   separator: {
+    flex: 1,
     height: 1,
     backgroundColor: '#dddddd'
   },
   paginationView: {
+    flex: 1,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',

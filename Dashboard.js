@@ -41,7 +41,7 @@ class Dashboard extends Component {
               presses: this.state.presses + 1
             });
           }}
-          >
+          style={styles.tabBarItem}>
           {this._renderContent('white', 'Popular', this.state.presses)}
         </Icon.TabBarItem>
         <Icon.TabBarItem
@@ -55,7 +55,7 @@ class Dashboard extends Component {
               presses: this.state.presses + 1
             });
           }}
-          >
+          style={styles.tabBarItem}>
           {this._renderContent('white', 'New', this.state.presses)}
         </Icon.TabBarItem>
 
@@ -68,14 +68,11 @@ const styles = StyleSheet.create({
   tabBar: {
     flex: 1
   },
+  tabBarItem: {
+    flex: 1
+  },
   tabContent: {
-    flex: 1,
-    alignItems: 'center',
-    marginTop: 30,
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 10,
-    paddingRight: 10
+    flex: 1
   }
 });
 
