@@ -17,8 +17,13 @@ class PostsListView extends Component {
   }
 
   async _onFetch(page=1, callback, options) {
-    var response = await fetch(HackerNewsApi.topStories);
-    var postIds = await response.json();
+    var postIds = [];
+    if (this.props.postIds) {
+      postIds = this.props.postIds;
+    } else {
+      var response = await fetch(HackerNewsApi.topStories);
+      postIds = await response.json();
+    }
 
     var posts = [];
     var startIndex = (page - 1) * LISTVIEW_PAGESIZE;
@@ -43,14 +48,40 @@ class PostsListView extends Component {
     });
   }
 
+  _onPressRowDetail(rowData) {
+    this.props.navigator.push({
+      component: PostsListView,
+      title: rowData.title,
+      passProps: {
+        postIds: rowData.kids
+      }
+    });
+  }
+
   _renderRowView(rowData) {
+    var timeAgo = <TimeAgo time={rowData.time*1000} />;
+    var score = '';
+    var commentsCount = '';
+    if (rowData.type !== 'comment') {
+      score = rowData.score + ' points';
+      commentsCount = rowData.descendants + ' comments';
+    } else {
+      commentsCount = (!rowData.kids ? 0 : rowData.kids.length) + ' comments';
+    }
+
     return (
       <TouchableHighlight
-        underlayColor='red' onPress={() => this._onPressRowTitle(rowData)}>
+        underlayColor='red'>
         <View style={styles.rowContainer}>
-          <Text style={styles.rowTitleText}>{rowData.title}</Text>
+          <Text style={styles.rowTitleText}
+            onPress={() => this._onPressRowTitle(rowData)}>
+            {rowData.title || rowData.text}
+          </Text>
           <View style={styles.rowDetailContainer}>
-            <Text style={styles.rowDetailText}>{rowData.score} points by {rowData.by} | <TimeAgo time={rowData.time*1000} /> | {rowData.descendants} comments</Text>
+            <Text style={styles.rowDetailText}
+              onPress={() => this._onPressRowDetail(rowData)}>
+              {score} by {rowData.by} | {timeAgo} | {commentsCount}
+            </Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -82,7 +113,7 @@ class PostsListView extends Component {
       <GiftedListView
         rowView={(rowData) => this._renderRowView(rowData)}
         renderSeparator={this._renderSeparatorView}
-        onFetch={this._onFetch}
+        onFetch={(page=1, callback, options) => this._onFetch(page, callback, options)}
         firstLoader={true}
         pagination={true}
         paginationWaitingView={this._renderPaginationWaitingView}

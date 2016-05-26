@@ -17,7 +17,7 @@ class Dashboard extends Component {
   _renderContent(color: string, pageText: string, num?: number) {
     return (
       <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <PostsListView navigator={this.props.navigator}></PostsListView>
+        <PostsListView navigator={this.props.navigator} postIds={false}></PostsListView>
       </View>
     );
   }
