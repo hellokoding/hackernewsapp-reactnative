@@ -8,7 +8,7 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      selectedTab: 'popularTab',
+      selectedTab: 'topTab',
       notifCount: 0,
       presses: 0
     }
@@ -31,18 +31,18 @@ class Dashboard extends Component {
         style={styles.tabBar}>
         <Icon.TabBarItem
           color="red"
-          title="Popular"
+          title="Top"
           iconName="ios-heart-outline"
           selectedIconName="ios-heart"
-          selected={this.state.selectedTab === 'popularTab'}
+          selected={this.state.selectedTab === 'topTab'}
           onPress={() => {
             this.setState({
-              selectedTab: 'popularTab',
+              selectedTab: 'topTab',
               presses: this.state.presses + 1
             });
           }}
           style={styles.tabBarItem}>
-          {this._renderContent('white', 'Popular', this.state.presses)}
+          {this._renderContent('white', 'Top', this.state.presses)}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="New"
