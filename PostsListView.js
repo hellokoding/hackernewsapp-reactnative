@@ -5,7 +5,7 @@ import TimeAgo from 'react-native-timeago';
 import PostWebView from './PostWebView';
 import HackerNewsApi from './HackerNewsApi';
 
-const LISTVIEW_PAGESIZE = 2;
+const LISTVIEW_PAGESIZE = 12;
 
 class PostsListView extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class PostsListView extends Component {
       var postId = postIds[i];
       var response = await fetch(HackerNewsApi.post.replace('${postId}', postId));
       var post = await response.json();
-      posts.unshift(post);
+      posts.push(post);
     }
 
     callback(posts, {
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   listViewContainer: {
     flex: 1,
     marginTop: 30,
+    marginBottom: 50,
     paddingTop: 30,
-    paddingBottom: 30,
     paddingLeft: 10,
     paddingRight: 10
   },
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   rowDetailText: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#828282'
   },
   separator: {
