@@ -52,6 +52,7 @@ class PostsListView extends Component {
     this.props.navigator.push({
       component: PostWebView,
       title: rowData.title,
+      backButtonTitle: '',
       passProps: {
         uri: rowData.url
       }
@@ -63,7 +64,8 @@ class PostsListView extends Component {
 
     this.props.navigator.push({
       component: PostsListView,
-      title: rowData.title,
+      title: rowData.title || this._fixCommentText(rowData.text),
+      backButtonTitle: '',
       passProps: {
         postIds: rowData.kids
       }

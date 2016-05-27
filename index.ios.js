@@ -11,6 +11,7 @@ class HackerNewsApp extends Component {
         initialRoute={{
           component: Dashboard,
           title: 'Hacker News',
+          backButtonTitle: '',
           passProps: { myProp: 'foo' },
         }}
       />
