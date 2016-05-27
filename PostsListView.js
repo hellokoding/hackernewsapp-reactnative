@@ -3,11 +3,7 @@ import {StyleSheet, ListView, View, Text, TouchableHighlight} from 'react-native
 import GiftedListView from 'react-native-gifted-listview';
 import TimeAgo from 'react-native-timeago';
 import PostWebView from './PostWebView';
-
-const HackerNewsApi = {
-  topStories: 'https://hacker-news.firebaseio.com/v0/topstories.json',
-  post: 'https://hacker-news.firebaseio.com/v0/item/${postId}.json'
-};
+import HackerNewsApi from './HackerNewsApi';
 
 const LISTVIEW_PAGESIZE = 2;
 
@@ -21,7 +17,7 @@ class PostsListView extends Component {
     if (this.props.postIds) {
       postIds = this.props.postIds;
     } else {
-      var response = await fetch(HackerNewsApi.topStories);
+      var response = await fetch(this.props.postsApi);
       postIds = await response.json();
     }
 
@@ -52,7 +48,6 @@ class PostsListView extends Component {
     this.props.navigator.push({
       component: PostWebView,
       title: rowData.title,
-      backButtonTitle: '',
       passProps: {
         uri: rowData.url
       }
@@ -65,7 +60,6 @@ class PostsListView extends Component {
     this.props.navigator.push({
       component: PostsListView,
       title: rowData.title || this._fixCommentText(rowData.text),
-      backButtonTitle: '',
       passProps: {
         postIds: rowData.kids
       }

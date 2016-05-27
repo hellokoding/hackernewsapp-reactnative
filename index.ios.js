@@ -10,9 +10,7 @@ class HackerNewsApp extends Component {
         tintColor='#FF6600'
         initialRoute={{
           component: Dashboard,
-          title: 'Top',
-          backButtonTitle: '',
-          passProps: { myProp: 'foo' },
+          title: 'Hacker News'
         }}
       />
     );

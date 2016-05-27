@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PostsListView from './PostsListView';
+import HackerNewsApi from './HackerNewsApi';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedTab: 'topTab',
-      notifCount: 0,
-      presses: 0
+      selectedTab: 'topTab'
     }
   }
 
-  _renderContent(color: string, pageText: string, num?: number) {
+  _renderContent(color, api) {
     return (
       <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <PostsListView navigator={this.props.navigator} postIds={false}></PostsListView>
+        <PostsListView
+          navigator={this.props.navigator}
+          postIds={false}
+          postsApi={api}>
+        </PostsListView>
       </View>
     );
   }
@@ -37,12 +40,11 @@ class Dashboard extends Component {
           selected={this.state.selectedTab === 'topTab'}
           onPress={() => {
             this.setState({
-              selectedTab: 'topTab',
-              presses: this.state.presses + 1
+              selectedTab: 'topTab'
             });
           }}
           style={styles.tabBarItem}>
-          {this._renderContent('white', 'Top', this.state.presses)}
+          {this._renderContent('white', HackerNewsApi.topStories)}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="New"
@@ -51,12 +53,11 @@ class Dashboard extends Component {
           selected={this.state.selectedTab === 'newTab'}
           onPress={() => {
             this.setState({
-              selectedTab: 'newTab',
-              presses: this.state.presses + 1
+              selectedTab: 'newTab'
             });
           }}
           style={styles.tabBarItem}>
-          {this._renderContent('white', 'New', this.state.presses)}
+          {this._renderContent('white', HackerNewsApi.newStories)}
         </Icon.TabBarItem>
 
       </TabBarIOS>
