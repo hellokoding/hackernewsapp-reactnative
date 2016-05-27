@@ -30,8 +30,7 @@ class Dashboard extends Component {
       <TabBarIOS
         unselectedTintColor="black"
         tintColor="#ff6600"
-        barTintColor="white"
-        style={styles.tabBar}>
+        barTintColor="white">
         <Icon.TabBarItem
           color="red"
           title="Top"
@@ -42,8 +41,7 @@ class Dashboard extends Component {
             this.setState({
               selectedTab: 'topTab'
             });
-          }}
-          style={styles.tabBarItem}>
+          }}>
           {this._renderContent('white', HackerNewsApi.topStories)}
         </Icon.TabBarItem>
 
@@ -56,8 +54,7 @@ class Dashboard extends Component {
             this.setState({
               selectedTab: 'newTab'
             });
-          }}
-          style={styles.tabBarItem}>
+          }}>
           {this._renderContent('white', HackerNewsApi.newStories)}
         </Icon.TabBarItem>
 
@@ -109,12 +106,6 @@ class Dashboard extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    flex: 1
-  },
-  tabBarItem: {
-    flex: 1
-  },
   tabContent: {
     flex: 1
   }

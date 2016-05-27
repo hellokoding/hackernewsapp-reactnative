@@ -121,7 +121,7 @@ class PostsListView extends Component {
         onPress={paginateCallback}
         style={styles.paginationView}
       >
-        <Text style={[styles.actionsLabel, {fontSize: 13}]}>
+        <Text style={styles.actionsLabel}>
           load more
         </Text>
       </TouchableHighlight>
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   actionsLabel: {
-    fontSize: 20,
+    fontSize: 13,
     color: '#007aff',
   }
 });
