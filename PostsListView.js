@@ -27,15 +27,23 @@ class PostsListView extends Component {
 
     var posts = [];
     var startIndex = (page - 1) * LISTVIEW_PAGESIZE;
-    var endIndex = startIndex + LISTVIEW_PAGESIZE;
-    for(var i = startIndex; i < endIndex; i++) {
+    var endIndex = startIndex + LISTVIEW_PAGESIZE - 1;
+    var allLoaded = false;
+    if (endIndex >= postIds.length) {
+      endIndex = postIds.length - 1;
+      allLoaded = true;
+    }
+
+    for(var i = startIndex; i <= endIndex; i++) {
       var postId = postIds[i];
       var response = await fetch(HackerNewsApi.post.replace('${postId}', postId));
       var post = await response.json();
       posts.unshift(post);
     }
 
-    callback(posts);
+    callback(posts, {
+      allLoaded: allLoaded
+    });
   }
 
   _onPressRowTitle(rowData) {
@@ -147,7 +155,6 @@ class PostsListView extends Component {
 const styles = StyleSheet.create({
   listViewContainer: {
     flex: 1,
-    //alignItems: 'center',
     marginTop: 30,
     paddingTop: 30,
     paddingBottom: 30,
