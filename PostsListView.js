@@ -51,6 +51,8 @@ class PostsListView extends Component {
   }
 
   _onPressRowDetail(rowData) {
+    if (!rowData.kids || !rowData.kids.length) return;
+
     this.props.navigator.push({
       component: PostsListView,
       title: rowData.title,
@@ -75,10 +77,11 @@ class PostsListView extends Component {
     var score = '';
     var commentsCount = '';
     if (rowData.type === 'comment') {
-      commentsCount = (!rowData.kids ? 0 : rowData.kids.length) + ' comments';
+      commentsCount = (!rowData.kids ? 0 : rowData.kids.length);
+      commentsCount = (commentsCount == 1 ? '1 comment' : (commentsCount + ' comments'));
     } else {
       score = rowData.score + ' points';
-      commentsCount = rowData.descendants + ' comments';
+      commentsCount = (rowData.descendants == 1 ? '1 comment' : (rowData.descendants + ' comments'));
     }
 
     return (
