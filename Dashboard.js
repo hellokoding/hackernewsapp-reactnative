@@ -46,10 +46,11 @@ class Dashboard extends Component {
           style={styles.tabBarItem}>
           {this._renderContent('white', HackerNewsApi.topStories)}
         </Icon.TabBarItem>
+
         <Icon.TabBarItem
           title="New"
-          iconName="ios-pulse-outline"
-          selectedIconName="ios-pulse"
+          iconName="ios-bulb-outline"
+          selectedIconName="ios-bulb"
           selected={this.state.selectedTab === 'newTab'}
           onPress={() => {
             this.setState({
@@ -58,6 +59,48 @@ class Dashboard extends Component {
           }}
           style={styles.tabBarItem}>
           {this._renderContent('white', HackerNewsApi.newStories)}
+        </Icon.TabBarItem>
+
+        <Icon.TabBarItem
+          title="Show"
+          iconName="ios-sunny-outline"
+          selectedIconName="ios-sunny"
+          selected={this.state.selectedTab === 'showTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'showTab'
+            });
+          }}
+          style={styles.tabBarItem}>
+          {this._renderContent('white', HackerNewsApi.showStories)}
+        </Icon.TabBarItem>
+
+        <Icon.TabBarItem
+          title="Ask"
+          iconName="ios-chatboxes-outline"
+          selectedIconName="ios-chatboxes"
+          selected={this.state.selectedTab === 'askTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'askTab'
+            });
+          }}
+          style={styles.tabBarItem}>
+          {this._renderContent('white', HackerNewsApi.askStories)}
+        </Icon.TabBarItem>
+
+        <Icon.TabBarItem
+          title="Jobs"
+          iconName="ios-code-working-outline"
+          selectedIconName="ios-code-working"
+          selected={this.state.selectedTab === 'jobTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'jobTab'
+            });
+          }}
+          style={styles.tabBarItem}>
+          {this._renderContent('white', HackerNewsApi.jobStories)}
         </Icon.TabBarItem>
 
       </TabBarIOS>
