@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TabBarIOS } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PostsListView from './PostsListView';
 import HackerNewsApi from './HackerNewsApi';
+import TabNavigator from 'react-native-tab-navigator';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Dashboard extends Component {
 
   _renderContent(color, api) {
     return (
-      <View style={[styles.tabContent, {backgroundColor: color}]}>
+      <View style={{flex: 1, backgroundColor: color}}>
         <PostsListView
           navigator={this.props.navigator}
           postIds={false}
@@ -26,89 +27,54 @@ class Dashboard extends Component {
   }
 
   render() {
+    let iconSize = 28;
+    let iconColor = '#ff6600';
+
     return (
-      <TabBarIOS
-        unselectedTintColor="black"
-        tintColor="#ff6600"
-        barTintColor="white">
-        <Icon.TabBarItem
-          color="red"
-          title="Top"
-          iconName="ios-heart-outline"
-          selectedIconName="ios-heart"
+      <TabNavigator tabBarStyle={{backgroundColor: 'white'}}>
+        <TabNavigator.Item
           selected={this.state.selectedTab === 'topTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'topTab'
-            });
-          }}>
+          title="Top"
+          renderIcon={() => <Icon name="ios-heart-outline" color={iconColor}  size={iconSize}/>}
+          renderSelectedIcon={() => <Icon name="ios-heart" color={iconColor} size={iconSize}/>}
+          onPress={() => this.setState({ selectedTab: 'topTab' })}>
           {this._renderContent('white', HackerNewsApi.topStories)}
-        </Icon.TabBarItem>
-
-        <Icon.TabBarItem
-          title="New"
-          iconName="ios-bulb-outline"
-          selectedIconName="ios-bulb"
+        </TabNavigator.Item>
+        <TabNavigator.Item
           selected={this.state.selectedTab === 'newTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'newTab'
-            });
-          }}>
+          title="New"
+          renderIcon={() => <Icon name="ios-bulb-outline" color={iconColor} size={iconSize}/>}
+          renderSelectedIcon={() => <Icon name="ios-bulb" color={iconColor} size={iconSize}/>}
+          onPress={() => this.setState({ selectedTab: 'newTab' })}>
           {this._renderContent('white', HackerNewsApi.newStories)}
-        </Icon.TabBarItem>
-
-        <Icon.TabBarItem
-          title="Show"
-          iconName="ios-sunny-outline"
-          selectedIconName="ios-sunny"
+        </TabNavigator.Item>
+        <TabNavigator.Item
           selected={this.state.selectedTab === 'showTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'showTab'
-            });
-          }}
-          style={styles.tabBarItem}>
+          title="Show"
+          renderIcon={() => <Icon name="ios-sunny-outline" color={iconColor} size={iconSize}/>}
+          renderSelectedIcon={() => <Icon name="ios-sunny" color={iconColor} size={iconSize}/>}
+          onPress={() => this.setState({ selectedTab: 'showTab' })}>
           {this._renderContent('white', HackerNewsApi.showStories)}
-        </Icon.TabBarItem>
-
-        <Icon.TabBarItem
-          title="Ask"
-          iconName="ios-chatboxes-outline"
-          selectedIconName="ios-chatboxes"
+        </TabNavigator.Item>
+        <TabNavigator.Item
           selected={this.state.selectedTab === 'askTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'askTab'
-            });
-          }}
-          style={styles.tabBarItem}>
+          title="Ask"
+          renderIcon={() => <Icon name="ios-chatboxes-outline" color={iconColor} size={iconSize}/>}
+          renderSelectedIcon={() => <Icon name="ios-chatboxes" color={iconColor} size={iconSize}/>}
+          onPress={() => this.setState({ selectedTab: 'askTab' })}>
           {this._renderContent('white', HackerNewsApi.askStories)}
-        </Icon.TabBarItem>
-
-        <Icon.TabBarItem
-          title="Jobs"
-          iconName="ios-code-working-outline"
-          selectedIconName="ios-code-working"
+        </TabNavigator.Item>
+        <TabNavigator.Item
           selected={this.state.selectedTab === 'jobTab'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'jobTab'
-            });
-          }}
-          style={styles.tabBarItem}>
+          title="Job"
+          renderIcon={() => <Icon name="ios-code-working-outline" color={iconColor} size={iconSize}/>}
+          renderSelectedIcon={() => <Icon name="ios-code-working" color={iconColor} size={iconSize}/>}
+          onPress={() => this.setState({ selectedTab: 'jobTab' })}>
           {this._renderContent('white', HackerNewsApi.jobStories)}
-        </Icon.TabBarItem>
-
-      </TabBarIOS>
+        </TabNavigator.Item>
+      </TabNavigator>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  tabContent: {
-    flex: 1
-  }
-});
 
 module.exports = Dashboard;

@@ -10,6 +10,7 @@
     "react": "^15.0.2",
     "react-native": "^0.26.0",
     "react-native-gifted-listview": "0.0.15",
+    "react-native-tab-navigator": "^0.3.2",
     "react-native-timeago": "^0.3.0",
     "react-native-vector-icons": "^2.0.2",
     "react-timer-mixin": "^0.13.3"

@@ -45,13 +45,23 @@ class PostsListView extends Component {
   _onPressRowTitle(rowData) {
     if (rowData.type === 'comment') return;
 
-    this.props.navigator.push({
-      component: PostWebView,
-      title: rowData.title,
-      passProps: {
-        uri: rowData.url
-      }
-    });
+    if (rowData.url) {
+      this.props.navigator.push({
+        component: PostWebView,
+        title: rowData.title,
+        passProps: {
+          uri: rowData.url
+        }
+      });
+    } else {
+      this.props.navigator.push({
+        component: PostsListView,
+        title: rowData.title || this._fixCommentText(rowData.text),
+        passProps: {
+          postIds: rowData.kids
+        }
+      });
+    }
   }
 
   _onPressRowDetail(rowData) {
@@ -142,6 +152,7 @@ class PostsListView extends Component {
           withSections={false}
           refreshableTintColor='blue'
           style={styles.listView}
+          enableEmptySections={true}
         />
       </View>
     )
@@ -151,9 +162,7 @@ class PostsListView extends Component {
 const styles = StyleSheet.create({
   listViewContainer: {
     flex: 1,
-    marginTop: 30,
-    marginBottom: 50,
-    paddingTop: 30,
+    marginTop: 60,
     paddingLeft: 10,
     paddingRight: 10
   },

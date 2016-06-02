@@ -1,51 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Navigator, TouchableHighlight} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Dashboard from './Dashboard';
 
 class HackerNewsApp extends Component {
+  _renderScene(route, navigator) {
+    return <route.component navigator={navigator} title={route.title} {...route.passProps} />
+  }
+
   render() {
+    var NavigationBarRouteMapper = {
+      LeftButton(route, navigator, index, navState) {
+        if(index > 0) {
+          return (
+            <View style={{marginLeft: 10}}>
+              <Icon
+                name="ios-arrow-back"
+                color="#ff6600"
+                size={26}
+                onPress={() => { if (index > 0) { navigator.pop() } }} />
+            </View>
+          )
+        }
+        else { return null }
+      },
+      RightButton(route, navigator, index, navState) {
+        return null
+      },
+      Title(route, navigator, index, navState) {
+        let marginLeft = (route.title == 'Hacker News' ? 0 : 30);
+        return (
+          <View style={{flex: 1, marginLeft: marginLeft}}>
+            <Text style={ styles.title } numberOfLines={1}>{route.title || 'Hacker News'}</Text>
+          </View>
+        )
+      }
+    };
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Navigator style={{flex: 1, backgroundColor: 'white'}}
+        initialRoute={{
+          component: Dashboard,
+          title: 'Hacker News'
+        }}
+        renderScene={this._renderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            navigationStyles={Navigator.NavigationBar.StylesIOS}
+            routeMapper={ NavigationBarRouteMapper } />
+        }
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
     textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
 AppRegistry.registerComponent('HackerNewsApp', () => HackerNewsApp);
