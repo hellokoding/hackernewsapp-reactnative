@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, WebView} from 'react-native';
-//var { Platform } = React;
 
 class PostWebView extends Component {
   render() {
