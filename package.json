@@ -8,7 +8,7 @@
   "dependencies": {
     "moment": "^2.13.0",
     "react": "^15.0.2",
-    "react-native": "^0.26.0",
+    "react-native": "0.26.0",
     "react-native-gifted-listview": "0.0.15",
     "react-native-tab-navigator": "^0.3.2",
     "react-native-timeago": "^0.3.0",
