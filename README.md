@@ -11,8 +11,9 @@ https://hellokoding.com/hackernewsapp-with-reactnative/
 - React Native 0.26
 
 ### Stack
-- ES6
+- ES6, ES7
 - React Native
+- CSS Flexbox
 
 ### Run
 ```bash
